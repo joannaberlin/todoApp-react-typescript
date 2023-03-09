@@ -1,19 +1,20 @@
-import Todo from '../models/todo';
+import { useContext } from 'react';
 import TodoItem from './TodoItem';
+import { TodosContext } from '../store/todos-context';
 import styles from './Todos.module.css';
 
 // FC - Functional Component - type definition; it makes clear that below code is a function
 // and actes as a functional component
-const Todos: React.FC<{ items: Todo[]; onRemoveTodo: (id: string) => void }> = (
-	props
-) => {
+const Todos: React.FC = () => {
+	const todosCtx = useContext(TodosContext);
+
 	return (
 		<ul className={styles.todos}>
-			{props.items.map((item) => (
+			{todosCtx.items.map((item) => (
 				<TodoItem
 					key={item.id}
 					text={item.text}
-					onRemoveTodo={props.onRemoveTodo.bind(null, item.id)}
+					onRemoveTodo={todosCtx.removeTodo.bind(null, item.id)}
 				/>
 			))}
 		</ul>
